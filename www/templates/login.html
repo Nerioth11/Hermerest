@@ -1,0 +1,15 @@
+        <ion-view title="Login" id="page5">
+          <ion-content padding="true" class="has-header">
+            <h4 id="login-heading8" style="color:#000000;font-weight:400;">Por favor introduzca su teléfono:</h4>
+            <form ng-submit="send(formData)" id="login-form1" class="list">
+              <ion-list id="login-list1">
+                <label class="item item-input" id="login-input1">
+                  <span class="input-label">Teléfono:</span>
+                  <input type="tel" name="phoneNumber" required placeholder="" ng-model="formData.phoneNumber">
+                </label>
+              </ion-list>
+              <div class="spacer" style="height: 40px;"></div>
+              <input value="Acceder" type="submit" id="login-button1" style="border-radius:1px 1px 1px 1px;" class="button button-positive button-block">
+            </form>
+          </ion-content>
+        </ion-view>
