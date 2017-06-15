@@ -1,15 +1,15 @@
 <ion-view title="Sign Up" id="page11">
   <ion-content padding="true" class="has-header">
     <div class="spacer" style="height: 100px;"></div>
-    <form id="signUp-form3" class="list">
+    <form ng-submit="sendName(name)"id="signUp-form3" class="list">
       <ion-list id="signUp-list12">
         <label class="item item-input" id="signUp-input3">
           <span class="input-label">Nombre y Apellidos:</span>
-          <input type="text" placeholder="">
+          <input type="text" name="name" required placeholder="" ng-model="name">
         </label>
       </ion-list>
       <div class="spacer" style="height: 100px;"></div>
-      <a ui-sref="tabsController.notices()" id="signUp-button24" class="button button-positive button-block">Registrarse</a>
+      <input value="Registrarse" type="submit" id="login-button1" style="border-radius:1px 1px 1px 1px;" class="button button-positive button-block">
     </form>
   </ion-content>
 </ion-view>
