@@ -56,8 +56,8 @@ var es = moment.defineLocale('es', {
         sameElse : 'L'
     },
     relativeTime : {
-        future : 'en %s',
-        past : 'hace %s',
+        future : 'Se cierra en %s',
+        past : 'Hace %s',
         s : 'unos segundos',
         m : 'un minuto',
         mm : '%d minutos',

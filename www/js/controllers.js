@@ -1,8 +1,6 @@
 angular.module('app.controllers', [])
 
-.controller('noticesCtrl', ['$scope', '$http', '$stateParams', 'httpService', 'sessionService',  // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
+.controller('noticesCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService',
 function ($scope, $stateParams, httpService, httpService, sessionService) {
   //localStorage.clear();
   $scope.notices = [];
@@ -16,20 +14,30 @@ function ($scope, $stateParams, httpService, httpService, sessionService) {
     })
 }])
 
-.controller('pollsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
+.controller('pollsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService',
+function ($scope, $stateParams, httpService, httpService, sessionService) {
+  $scope.polls = [];
+  httpService.getCall("http://localhost:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/messages?type=Poll')
+    .then(function(response){
+      if(response.data.success){
+        angular.forEach(response.data.content, function(message){
+          $scope.polls.push(message);
+        });
+      }
+    })
 }])
 
-.controller('authorizationsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
+.controller('authorizationsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService',
+function ($scope, $stateParams, httpService, httpService, sessionService) {
+  $scope.authorizations = [];
+  httpService.getCall("http://localhost:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/messages?type=Authorization')
+    .then(function(response){
+      if(response.data.success){
+        angular.forEach(response.data.content, function(message){
+          $scope.authorizations.push(message);
+        });
+      }
+    })
 }])
 
 .controller('noticeContentCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
