@@ -1,6 +1,6 @@
 {
   "name": "Hermerest",
-  "app_id": "",
+  "app_id": "f3147322",
   "type": "ionic1",
   "gulpStartupTasks": [
     "sass",

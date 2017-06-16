@@ -1,15 +1,19 @@
 angular.module('app.controllers', [])
 
-.controller('noticesCtrl', ['$scope', '$http', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('noticesCtrl', ['$scope', '$http', '$stateParams', 'httpService', 'sessionService',  // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $http, $stateParams) {
-  $scope.stories = [];
-  $http.get('https://www.reddit.com/r/Android/new/.json').success(function(response){
-    angular.forEach(response.data.children, function(child){
-      $scope.stories.push(child.data);
-    });
-  });
+function ($scope, $stateParams, httpService, httpService, sessionService) {
+  //localStorage.clear();
+  $scope.notices = [];
+  httpService.getCall("http://localhost:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/messages?type=Circular')
+    .then(function(response){
+      if(response.data.success){
+        angular.forEach(response.data.content, function(message){
+          $scope.notices.push(message);
+        });
+      }
+    })
 }])
 
 .controller('pollsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller

@@ -97,7 +97,10 @@ angular.module('app.routes', [])
     controller: 'signUpCtrl'
   })
 
-$urlRouterProvider.otherwise('/login')
-
+  if (window.localStorage.getItem("id")==null) {
+    $urlRouterProvider.otherwise('/login');
+  } else {
+    $urlRouterProvider.otherwise('/tabs/notices');
+  }
 
 });
