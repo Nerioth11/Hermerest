@@ -1,7 +1,7 @@
 angular.module('app.controllers', [])
 
-.controller('noticesCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService',
-function ($scope, $stateParams, httpService, httpService, sessionService) {
+.controller('noticesCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData',
+function ($scope, $stateParams, httpService, httpService, sessionService, MessageData) {
   //localStorage.clear();
   $scope.notices = [];
   httpService.getCall("http://localhost:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/messages?type=Circular')
@@ -12,6 +12,15 @@ function ($scope, $stateParams, httpService, httpService, sessionService) {
         });
       }
     })
+  $scope.sendMessageId = function(id){
+    MessageData.setMessageData(id);
+    $scope.noticeId=id;
+  }
+
+  $scope.sortNotices = function(notice) {
+    var date = new Date(notice.sendingDate);
+    return date;
+  }
 }])
 
 .controller('pollsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService',
@@ -40,12 +49,18 @@ function ($scope, $stateParams, httpService, httpService, sessionService) {
     })
 }])
 
-.controller('noticeContentCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
+.controller('noticeContentCtrl', ['$scope', '$stateParams', 'httpService', 'MessageData',
+function ($scope, $stateParams, httpService, MessageData) {
+  $id = MessageData.getMessageData();
+  httpService.getCall("http://localhost:8000/Hermerest/web/app_dev.php/api/circulars/" + $id)
+    .then(function(response){
+      if(response.data.success){
+        $scope.noticeContent=response.data.content;
+      }
+    })
+    $scope.openInExternalBrowser = function(attachmentId){
+    window.open('http://localhost:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
+    };
 }])
 
 .controller('pollContentCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller

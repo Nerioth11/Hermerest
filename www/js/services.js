@@ -13,7 +13,7 @@ angular.module('app.services', [])
     postCall: function(url, data){
       return $http.post(url, data);
     },
-  }
+  };
 })
 
 .factory('sessionService',['$http',function($http){
@@ -29,6 +29,18 @@ return {
    },
  };
 }])
+
+.factory('MessageData', function () {
+var messageId = {};
+  return {
+      getMessageData: function () {
+          return messageId;
+      },
+      setMessageData: function (id) {
+          messageId = id;
+      },
+  };
+})
 
 .service('BlankService', [function(){
 
