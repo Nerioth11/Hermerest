@@ -97,6 +97,12 @@ angular.module('app.routes', [])
     controller: 'signUpCtrl'
   })
 
+  .state('passCode', {
+    url: '/passcode',
+    templateUrl: 'templates/passCode.html',
+    controller: 'passCodeCtrl'
+  })
+
   if (window.localStorage.getItem("id")==null) {
     $urlRouterProvider.otherwise('/login');
   } else {

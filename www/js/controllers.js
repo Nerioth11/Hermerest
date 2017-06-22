@@ -1,9 +1,11 @@
 angular.module('app.controllers', [])
 
-.controller('noticesCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData',
-function ($scope, $stateParams, httpService, httpService, sessionService, MessageData) {
+.controller('noticesCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar',
+function ($scope, $stateParams, httpService, httpService, sessionService, MessageData, $ionicFilterBar) {
   //localStorage.clear();
   $scope.notices = [];
+  var filterBarInstance;
+
   httpService.getCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/messages?type=Circular')
     .then(function(response){
       if(response.data.success){
@@ -19,6 +21,15 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
   $scope.sortNotices = function(notice) {
     var date = new Date(notice.sendingDate);
     return date;
+  };
+
+  $scope.showFilterBar = function () {
+     filterBarInstance = $ionicFilterBar.show({
+       items: $scope.notices,
+       update: function (filteredItems) {
+         $scope.notices = filteredItems;
+       }
+     });
   };
 
 }])
@@ -68,7 +79,7 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
 }])
 
 .controller('noticeContentCtrl', ['$scope', '$stateParams', 'httpService', 'MessageData',
-function ($scope, $stateParams, httpService, MessageData) {
+function ($scope, $stateParams, httpService, MessageData, $ionicPopup) {
   $id = MessageData.getMessageData();
   httpService.getCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/circulars/" + $id)
     .then(function(response){
@@ -95,8 +106,8 @@ function ($scope, $stateParams, httpService, MessageData) {
     };
 }])
 
-.controller('authorizationContentCtrl', ['$scope', '$stateParams',  'httpService', 'MessageData',
-function ($scope, $stateParams, httpService, MessageData) {
+.controller('authorizationContentCtrl', ['$scope', '$stateParams',  'httpService', 'MessageData', '$ionicPopup', 'sessionService',
+function ($scope, $stateParams, httpService, MessageData , $ionicPopup, sessionService) {
   $id = MessageData.getMessageData();
   httpService.getCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/authorizations/" + $id)
     .then(function(response){
@@ -107,6 +118,40 @@ function ($scope, $stateParams, httpService, MessageData) {
     $scope.openInExternalBrowser = function(attachmentId){
     window.open('http://83.46.80.214:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
     };
+
+    $scope.showPopup = function() {
+      $scope.data = {}
+      var myPopup = $ionicPopup.show({
+        template: '<input type="tel" style="-webkit-text-security:disc;" ng-model="data.passcode">',
+        title: 'Código de seguridad',
+        subTitle: 'Por favor, introduzca su código de seguridad.',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancelar' },
+          {
+            text: '<b>Ok</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              if (!$scope.data.passcode) {
+                e.preventDefault();
+              } else {
+                if($scope.data.passcode == sessionService.get('passCode')){
+                  var alertPopup = $ionicPopup.alert({
+                    title: 'Respuesta enviada',
+                    template: 'Se ha respondido correctamente a la autorización. ¡Gracias!'
+                  });
+                }else{
+                  var alertPopup = $ionicPopup.alert({
+                    title: 'Código de seguridad incorrecto',
+                    template: 'Lo sentimos, el código de seguridad no coincide.'
+                  });
+                }
+              }
+            }
+          },
+        ]
+      });
+    }
 }])
 
 .controller('loginCtrl', ['$scope', '$stateParams', 'httpService', 'sessionService', '$state',
@@ -136,8 +181,8 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('signUpCtrl', ['$scope', '$stateParams',  'httpService', 'sessionService', '$state',
-function ($scope, $stateParams, httpService, sessionService, $state) {
+.controller('signUpCtrl', ['$scope', '$stateParams', '$state', 'httpService', 'sessionService',
+function ($scope, $stateParams,  $state, httpService, sessionService) {
   $scope.sendName= function(name){
     $data = {'name' : name, 'telephone' : sessionService.get('telephone')};
     sessionService.set('name', name);
@@ -145,10 +190,18 @@ function ($scope, $stateParams, httpService, sessionService, $state) {
      .then(function (response) {
        if(response.data.success){
          sessionService.set('id', response.data.content.id);
-         $state.go('tabsController.notices');
+         $state.go('passCode');
        }else{
-         alert("No pudiste registrarte wey");
+         alert("Hubo un error en el registro");
        }
       })
   }
+}])
+
+.controller('passCodeCtrl', ['$scope', '$stateParams',  '$state', 'sessionService',
+function ($scope, $stateParams, $state, sessionService) {
+  $scope.sendPasscode = function(passCode) {
+    sessionService.set('passCode', passCode);
+    $state.go('tabsController.notices');
+  };
 }])

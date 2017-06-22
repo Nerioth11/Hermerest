@@ -1,3 +1,6 @@
 $positive: #649EC6;
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 @import "../www/lib/ionic/scss";
+@import
+  "path_to_bower_components/ionic/scss/ionic",
+  "path_to_bower_components/ionic-filter-bar/scss/ionic.filter.bar";
