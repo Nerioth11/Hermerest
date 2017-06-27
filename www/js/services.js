@@ -13,6 +13,10 @@ angular.module('app.services', [])
     postCall: function(url, data){
       return $http.post(url, data);
     },
+
+    putCall: function(url, data){
+      return $http.put(url, data);
+    },
   };
 })
 

@@ -13,10 +13,12 @@
         <a ng-click="openInExternalBrowser(pollContent.attachmentId)">{{pollContent.attachmentName}}</a>
       </ion-item>
       <ion-item class="item-divider" id="authorizationContent-list-item-divider2">Por favor, escoja una respuesta: </ion-item>
-      <ion-checkbox id="pollContent-checkbox1" ng-repeat="option in pollContent.options">{{option.name}}</ion-checkbox>
+      <ion-item id="optionsList">
+        <ion-checkbox id="pollContent-checkbox-{{ option.id }}" ng-repeat="option in pollContent.options" ng-click="checkMultipleAndDo(pollContent.multiple, {{ option.id }})">{{option.name}}</ion-checkbox>
+      </ion-item>
       <ion-item class="item-divider" id="pollContent-list-item-divider1">Fecha Límite</ion-item>
       <ion-item id="pollContent-list-item32">{{pollContent.limitDate | amDateFormat:'LLLL'}}</ion-item>
     </form>
-    <button id="pollContent-button23" class="button button-positive button-block">Enviar respuesta</button>
+    <button id="pollContent-button23" class="button button-positive button-block" ng-click="sendPollReplies()" ng-hide="showButton == false">Enviar respuesta</button>
   </ion-content>
 </ion-view>
