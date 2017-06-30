@@ -1,0 +1,17 @@
+<ion-view title="Circulares" id="page2">
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+    </button>
+  </ion-nav-buttons>
+  <ion-content padding="false" class="has-header">
+    <div id="circulars-container2">
+      <ion-list id="circulars-list8">
+        <ion-item ng-repeat="circular in circulars | filter:search | orderBy : sortCirculars : true" ng-click="sendCircularId(circular.id)" class="item-icon-right positive" id="circulars-list-item18" ui-sref="tabsController.circularContent()">{{circular.subject}}
+          <span class="item-note" am-time-ago="circular.sendingDate"></span>
+          <i ng-show="circular.attachment" class="icon ion-android-attach"></i>
+          <ion-option-button class="button-royal">Importante</ion-option-button>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+</ion-view>

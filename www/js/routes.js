@@ -9,12 +9,12 @@ angular.module('app.routes', [])
   $stateProvider
 
 
-      .state('tabsController.notices', {
-    url: '/notices',
+      .state('tabsController.circulars', {
+    url: '/circulars',
     views: {
       'tab1': {
-        templateUrl: 'templates/notices.html',
-        controller: 'noticesCtrl'
+        templateUrl: 'templates/circulars.html',
+        controller: 'circularsCtrl'
       }
     }
   })
@@ -39,12 +39,12 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('tabsController.noticeContent', {
-    url: '/noticeContent',
+  .state('tabsController.circularContent', {
+    url: '/circularContent',
     views: {
       'tab1': {
-        templateUrl: 'templates/noticeContent.html',
-        controller: 'noticeContentCtrl'
+        templateUrl: 'templates/circularContent.html',
+        controller: 'circularContentCtrl'
       }
     }
   })
@@ -103,10 +103,46 @@ angular.module('app.routes', [])
     controller: 'passCodeCtrl'
   })
 
+  .state('centreSelector', {
+    url: '/centreSelector',
+    templateUrl: 'templates/centreSelector.html',
+    controller: 'centreSelectorCtrl'
+  })
+
+  .state('tabsController.myData', {
+    url: '/myData',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/myData.html',
+        controller: 'myDataCtrl'
+      }
+    }
+  })
+
+  .state('tabsController.myCentre', {
+    url: '/myCentre',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/myCentre.html',
+        controller: 'myCentreCtrl'
+      }
+    }
+  })
+
+  .state('tabsController.myChildren', {
+    url: '/myChildren',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/myChildren.html',
+        controller: 'myChildrenCtrl'
+      }
+    }
+  })
+
   if (window.localStorage.getItem("id")==null) {
     $urlRouterProvider.otherwise('/login');
   } else {
-    $urlRouterProvider.otherwise('/tabs/notices');
+    $urlRouterProvider.otherwise('/tabs/circulars');
   }
 
 });

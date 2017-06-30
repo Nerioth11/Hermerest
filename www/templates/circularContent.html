@@ -1,0 +1,16 @@
+<ion-view title="{{circularContent.subject}}" id="page7">
+  <ion-content padding="false" class="has-header">
+    <div id="circularContent-container1">
+      <ion-list id="circularContent-list13">
+        <ion-item id="circularContent-list-item34">{{circularContent.subject}}</ion-item>
+        <ion-item id="circularContent-list-item35">{{circularContent.sendingDate | amDateFormat:'LLLL'}}</ion-item>
+        <ion-item class="item-icon-left" id="authorizationContent-list-item22" ng-show="circularContent.attachmentId!=null">
+          <i class="icon ion-android-attach" ng-show="circularContent.attachmentId!=null" href="#"></i><a ng-click="openInExternalBrowser(circularContent.attachmentId)">{{circularContent.attachmentName}}</a>
+        <span></span>
+      </ion-list>
+      <div id="circularContent-markdown12" style="text-align:justify;" class="show-list-numbers-and-dots padding">
+        <p  class="padding" style="color:#000000;font-size:16px;">{{circularContent.message}}</p>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

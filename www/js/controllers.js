@@ -1,33 +1,33 @@
 angular.module('app.controllers', [])
 
-.controller('noticesCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar',
+.controller('circularsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar',
 function ($scope, $stateParams, httpService, httpService, sessionService, MessageData, $ionicFilterBar) {
   //localStorage.clear();
-  $scope.notices = [];
+  $scope.circulars = [];
   var filterBarInstance;
-
-  httpService.getCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/messages?type=Circular')
+  $scope.prueba = new Date();
+  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/messages?type=Circular')
     .then(function(response){
       if(response.data.success){
         angular.forEach(response.data.content, function(message){
-          $scope.notices.push(message);
+          $scope.circulars.push(message);
         });
       }
     })
-  $scope.sendNoticeId = function(id){
+  $scope.sendCircularId = function(id){
     MessageData.setMessageData(id);
   };
 
-  $scope.sortNotices = function(notice) {
-    var date = new Date(notice.sendingDate);
+  $scope.sortCirculars = function(circular) {
+    var date = new Date(circular.sendingDate);
     return date;
   };
 
   $scope.showFilterBar = function () {
      filterBarInstance = $ionicFilterBar.show({
-       items: $scope.notices,
+       items: $scope.circulars,
        update: function (filteredItems) {
-         $scope.notices = filteredItems;
+         $scope.circulars = filteredItems;
        }
      });
   };
@@ -37,7 +37,7 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
 .controller('pollsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData',
 function ($scope, $stateParams, httpService, httpService, sessionService, MessageData) {
   $scope.polls = [];
-  httpService.getCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/messages?type=Poll')
+  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/messages?type=Poll')
     .then(function(response){
       if(response.data.success){
         angular.forEach(response.data.content, function(message){
@@ -59,7 +59,7 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
 .controller('authorizationsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData',
 function ($scope, $stateParams, httpService, httpService, sessionService, MessageData) {
   $scope.authorizations = [];
-  httpService.getCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/messages?type=Authorization')
+  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/messages?type=Authorization')
     .then(function(response){
       if(response.data.success){
         angular.forEach(response.data.content, function(message){
@@ -79,17 +79,17 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
 
 }])
 
-.controller('noticeContentCtrl', ['$scope', '$stateParams', 'httpService', 'MessageData',
+.controller('circularContentCtrl', ['$scope', '$stateParams', 'httpService', 'MessageData',
 function ($scope, $stateParams, httpService, MessageData, $ionicPopup) {
   $id = MessageData.getMessageData();
-  httpService.getCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/circulars/" + $id)
+  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/circulars/" + $id)
     .then(function(response){
       if(response.data.success){
-        $scope.noticeContent=response.data.content;
+        $scope.circularContent=response.data.content;
       }
     })
     $scope.openInExternalBrowser = function(attachmentId){
-    window.open('http://83.46.80.214:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
+    window.open('http://80.29.46.24:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
     };
 }])
 
@@ -98,7 +98,7 @@ function ($scope, $stateParams, httpService, MessageData,  sessionService) {
   $id = MessageData.getMessageData();
   $parentId = sessionService.get('id');
   $scope.showButton = true;
-  httpService.getCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/polls/" + $id + "?parent=" + $parentId)
+  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/polls/" + $id + "?parent=" + $parentId)
     .then(function(response){
       if(response.data.success){
         $scope.pollContent=response.data.content;
@@ -107,7 +107,7 @@ function ($scope, $stateParams, httpService, MessageData,  sessionService) {
       }
     })
     $scope.openInExternalBrowser = function(attachmentId){
-    window.open('http://83.46.80.214:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
+    window.open('http://80.29.46.24:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
     };
 
     $scope.checkMultipleAndDo = function(multiple, checkId) {
@@ -126,7 +126,7 @@ function ($scope, $stateParams, httpService, MessageData,  sessionService) {
         if(input.checked){
           $pollOptionId = input.parentNode.parentNode.id;
   		    $pollOptionId = $pollOptionId.substring($pollOptionId.lastIndexOf("-") + 1);
-          httpService.postCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/pollreplies", {'parentId': $parentId, 'pollOptionId' : $pollOptionId});
+          httpService.postCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/pollreplies", {'parentId': $parentId, 'pollOptionId' : $pollOptionId});
         }
       });
       angular.forEach(document.getElementsByTagName('input'), function(input){
@@ -142,14 +142,14 @@ function ($scope, $stateParams, httpService, MessageData , $ionicPopup, sessionS
   $parentId = sessionService.get('id');
   $studentId = sessionService.get('studentId');
   $id = MessageData.getMessageData();
-  httpService.getCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/parents/" + $parentId + "/authorizations/" + $id + "?student=" + $studentId)
+  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + $parentId + "/authorizations/" + $id + "?student=" + $studentId)
     .then(function(response){
       if(response.data.success){
         $scope.authorizationContent=response.data.content;
       }
     })
     $scope.openInExternalBrowser = function(attachmentId){
-    window.open('http://83.46.80.214:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
+    window.open('http://80.29.46.24:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
     };
 
     $scope.showPopup = function(reply, replyId) {
@@ -170,7 +170,7 @@ function ($scope, $stateParams, httpService, MessageData , $ionicPopup, sessionS
               } else {
                 if($scope.data.passcode == sessionService.get('passCode')){
                   if(replyId == null){
-                    httpService.postCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/authorizationreplies", {'authorized' : reply, 'parentId': $parentId, 'authorizationId' : $id, 'studentId' : $studentId})
+                    httpService.postCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/authorizationreplies", {'authorized' : reply, 'parentId': $parentId, 'authorizationId' : $id, 'studentId' : $studentId})
                     .then(function(response){
                       if(response.data.success){
                         $scope.authorizationContent.authorized=response.data.content.authorized;
@@ -180,7 +180,7 @@ function ($scope, $stateParams, httpService, MessageData , $ionicPopup, sessionS
                     });
 
                   }else{
-                    httpService.putCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/authorizationreplies/" + replyId, {'authorized' : reply, 'authorizationId' : $id, 'studentId' : $studentId})
+                    httpService.putCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/authorizationreplies/" + replyId, {'authorized' : reply, 'authorizationId' : $id, 'studentId' : $studentId})
                     .then(function(response){
                       if(response.data.success){
                         $scope.authorizationContent.authorized=response.data.content.authorized;
@@ -206,12 +206,12 @@ function ($scope, $stateParams, httpService, MessageData , $ionicPopup, sessionS
     function ($scope, $stateParams, httpService, sessionService, $state) {
       $scope.send= function(phoneNumber){
         sessionService.set('telephone', phoneNumber);
-        httpService.getCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/parents?telephone=" + phoneNumber)
+        httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents?telephone=" + phoneNumber)
          .then(function (response) {
            if(response.data.success){
              sessionService.set('id', response.data.content.id);
              sessionService.set('name', response.data.content.name);
-             $state.go('tabsController.notices');
+             $state.go('tabsController.circulars');
            }else{
              $scope.phoneNumber=phoneNumber;
              $state.go('signUp');
@@ -221,10 +221,8 @@ function ($scope, $stateParams, httpService, MessageData , $ionicPopup, sessionS
  }])
 
 
-.controller('settingsCtrl', ['$scope', '$stateParams', 'sessionService',
-function ($scope, $stateParams, sessionService) {
-  $scope.parentData= [];
-  $scope.parentData.name = sessionService.get('name');
+.controller('settingsCtrl', ['$scope', '$stateParams', '$state', 'sessionService',
+function ($scope, $stateParams, $state, sessionService) {
 }])
 
 .controller('signUpCtrl', ['$scope', '$stateParams', '$state', 'httpService', 'sessionService',
@@ -232,7 +230,7 @@ function ($scope, $stateParams,  $state, httpService, sessionService) {
   $scope.sendName= function(name){
     $data = {'name' : name, 'telephone' : sessionService.get('telephone')};
     sessionService.set('name', name);
-    httpService.postCall("http://83.46.80.214:8000/Hermerest/web/app_dev.php/api/parents", $data)
+    httpService.postCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents", $data)
      .then(function (response) {
        if(response.data.success){
          sessionService.set('id', response.data.content.id);
@@ -248,6 +246,47 @@ function ($scope, $stateParams,  $state, httpService, sessionService) {
 function ($scope, $stateParams, $state, sessionService) {
   $scope.sendPasscode = function(passCode) {
     sessionService.set('passCode', passCode);
-    $state.go('tabsController.notices');
+    $state.go('centreSelector');
   };
+}])
+
+.controller('centreSelectorCtrl', ['$scope', '$stateParams',  '$state', 'httpService', 'sessionService',
+function ($scope, $stateParams, $state, httpService, sessionService) {
+  $parentId = sessionService.get('id');
+  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/centres")
+  .then(function (response){
+    if(response.data.success){
+      $scope.centres = response.data.content;
+    }
+  });
+
+  $scope.addCentres = function(){
+    angular.forEach(document.getElementsByTagName('input'), function(input){
+      if(input.checked){
+        $centreId = input.parentNode.parentNode.id;
+        $centreId = $centreId.substring($centreId.lastIndexOf("-") + 1);
+        httpService.postCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/centres", {'parentId': $parentId, 'centreId' : $centreId})
+        .then(function (response){
+          if(response.data.success){
+            $state.go('tabsController.circulars');
+          }
+        });
+      }
+    });
+  };
+}])
+
+.controller('myDataCtrl', ['$scope', '$stateParams',  '$state', 'httpService', 'sessionService',
+function ($scope, $stateParams, $state, httpService, sessionService) {
+  $scope.parentData = [];
+  $scope.parentData.name = sessionService.get('name');
+  $scope.parentData.telephone = sessionService.get('telephone');
+}])
+
+.controller('myChildrenCtrl', ['$scope', '$stateParams',  '$state', 'httpService', 'sessionService',
+function ($scope, $stateParams, $state, httpService, sessionService) {
+}])
+
+.controller('myCentreCtrl', ['$scope', '$stateParams',  '$state', 'httpService', 'sessionService',
+function ($scope, $stateParams, $state, httpService, sessionService) {
 }])
