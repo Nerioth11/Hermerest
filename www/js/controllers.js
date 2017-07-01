@@ -137,8 +137,8 @@ function ($scope, $stateParams, httpService, MessageData,  sessionService) {
 
 }])
 
-.controller('authorizationContentCtrl', ['$scope', '$stateParams',  'httpService', 'MessageData', '$ionicPopup', 'sessionService',
-function ($scope, $stateParams, httpService, MessageData , $ionicPopup, sessionService) {
+.controller('authorizationContentCtrl', ['$scope', '$stateParams',  '$ionicPopup', 'httpService', 'MessageData', 'sessionService',
+function ($scope, $stateParams, $ionicPopup, httpService, MessageData , sessionService) {
   $parentId = sessionService.get('id');
   $studentId = sessionService.get('studentId');
   $id = MessageData.getMessageData();
@@ -276,15 +276,90 @@ function ($scope, $stateParams, $state, httpService, sessionService) {
   };
 }])
 
-.controller('myDataCtrl', ['$scope', '$stateParams',  '$state', 'httpService', 'sessionService',
-function ($scope, $stateParams, $state, httpService, sessionService) {
+.controller('myDataCtrl', ['$scope', '$stateParams',  '$state', '$ionicPopup', 'httpService', 'sessionService',
+function ($scope, $stateParams, $state, $ionicPopup, httpService, sessionService) {
+  $parentId = sessionService.get('id');
   $scope.parentData = [];
   $scope.parentData.name = sessionService.get('name');
   $scope.parentData.telephone = sessionService.get('telephone');
+  $passCode = sessionService.get('passCode');
+  $scope.sendNewPasscode = function(actualCode, newCode, newCodeRepeated) {
+    if(actualCode != $passCode){
+      alert('El código de seguridad actual no es correcto');
+    }else if (newCode != newCodeRepeated) {
+      alert('El nuevo código no coincide');
+    }else{
+      sessionService.destroy('passCode');
+      sessionService.set('passCode', newCode);
+      angular.forEach(document.getElementsByTagName('input'), function(input){
+        if(input.name != "updateButton") input.value = "";
+      });
+    }
+  };
+  $scope.showPopup = function() {
+    $scope.newName = {};
+    var myPopup = $ionicPopup.show({
+      template: '<input type="text" ng-model="newName.text">',
+      title: 'Actualizar nombre',
+      subTitle: 'Por favor, introduzca su nuevo nombre.',
+      scope: $scope,
+      buttons: [
+        { text: 'Cancelar' },
+        {
+          text: '<b>Ok</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            if (!$scope.newName.text) {
+              e.preventDefault();
+            } else {
+              httpService.putCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + $parentId, {'newName' : $scope.newName.text})
+              .then(function (response){
+                if(response.data.success){
+                  sessionService.destroy('name');
+                  sessionService.set('name', $scope.newName.text);
+                  $scope.parentData.name = $scope.newName.text;
+                }
+              });
+            }
+          }
+        },
+      ]
+    });
+  }
 }])
 
-.controller('myChildrenCtrl', ['$scope', '$stateParams',  '$state', 'httpService', 'sessionService',
-function ($scope, $stateParams, $state, httpService, sessionService) {
+.controller('myChildrenCtrl', ['$scope', '$stateParams', '$state', '$ionicPopup', 'httpService', 'sessionService',
+function ($scope, $stateParams, $state, $ionicPopup, httpService, sessionService) {
+  $parentId = sessionService.get('id');
+  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/children')
+  .then(function (response){
+    if(response.data.success){
+      $scope.children = response.data.content;
+    }
+  });
+  $scope.deleteChild = function(item, childId){
+    var myPopup = $ionicPopup.show({
+      template: '¿Está seguro de que desea disociarse de este/a hijo/a?',
+      title: 'Confirmación',
+      subTitle: 'IMPORTANTE: Esta acción no será reversible',
+      scope: $scope,
+      buttons: [
+        { text: 'Cancelar' },
+        {
+          text: '<b>Ok</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+              httpService.deleteCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + $parentId + "/students/" + childId, {})
+              .then(function (response){
+                if(response.data.success){
+                  $scope.children.splice($scope.children.indexOf(item), 1);
+                }
+              });
+          }
+        },
+      ]
+    });
+  };
 }])
 
 .controller('myCentreCtrl', ['$scope', '$stateParams',  '$state', 'httpService', 'sessionService',

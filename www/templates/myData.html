@@ -5,27 +5,27 @@
         <ion-item id="myDataContent-list-item32" class="item-icon-right">
           <strong>Nombre: </strong>
           {{parentData.name}}
-          <i class="icon ion-ios-compose-outline positive"></i>
+          <i class="icon ion-ios-compose-outline positive" ng-click="showPopup()"></i>
         </ion-item>
         <ion-item id="myDataContent-list-item32" class="item-icon-right">
           <strong>Teléfono: </strong>
           {{parentData.telephone}}
         </ion-item>
         <ion-item class="item-divider" id="myDataContent-list-item-divider1">Código de seguridad</ion-item>
-        <form ng-submit="sendNewPasscode(passCode)"id="myData-form3" class="list">
+        <form ng-submit="sendNewPasscode(actualCode, newCode, newCodeRepeated)"id="myData-form3" class="list">
           <label class="item item-input" id="myData-input2">
-            <span class="input-label">Código de seguridad actual:</span>
-            <input type="tel" style="-webkit-text-security:disc;">
+            <span class="input-label">Código actual:</span>
+            <input type="tel" style="-webkit-text-security:disc;" required ng-model="actualCode">
           </label>
           <label class="item item-input" id="myData-input3">
-            <span class="input-label">Nuevo código de seguridad:</span>
-            <input type="tel" style="-webkit-text-security:disc;">
+            <span class="input-label">Nuevo código:</span>
+            <input type="tel" style="-webkit-text-security:disc;" required ng-model="newCode">
           </label>
           <label class="item item-input" id="myData-input4">
             <span class="input-label">Por favor, repita el código:</span>
-            <input type="tel" style="-webkit-text-security:disc;">
+            <input type="tel" style="-webkit-text-security:disc;" required ng-model="newCodeRepeated">
           </label>
-          <input value="Actualizar código de seguridad" type="submit" id="myData-button1" style="border-radius:1px 1px 1px 1px;" class="button button-positive button-block">
+          <input value="Actualizar código de seguridad" name="updateButton" type="submit" id="myData-button1" style="border-radius:1px 1px 1px 1px;" class="button button-positive button-block">
         </form>
       </ion-list>
   </ion-content>

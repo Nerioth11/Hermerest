@@ -17,6 +17,10 @@ angular.module('app.services', [])
     putCall: function(url, data){
       return $http.put(url, data);
     },
+
+    deleteCall: function(url, data){
+      return $http.delete(url, data);
+    },
   };
 })
 
