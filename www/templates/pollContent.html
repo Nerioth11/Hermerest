@@ -16,7 +16,7 @@
       <ion-item id="optionsList">
         <ion-checkbox id="pollContent-checkbox-{{ option.id }}" ng-repeat="option in pollContent.options" ng-click="checkMultipleAndDo(pollContent.multiple, {{ option.id }})">{{option.name}}</ion-checkbox>
       </ion-item>
-      <ion-item class="item-divider" id="pollContent-list-item-divider1">Fecha Límite</ion-item>
+      <ion-item class="item-divider" id="pollContent-list-item-divider1">Fecha Límite <p style="color : red" ng-hide="isActive == true">EXCEDIDA</p></ion-item>
       <ion-item id="pollContent-list-item32">{{pollContent.limitDate | amDateFormat:'LLLL'}}</ion-item>
     </form>
     <button id="pollContent-button23" class="button button-positive button-block" ng-click="sendPollReplies()" ng-hide="showButton == false">Enviar respuesta</button>

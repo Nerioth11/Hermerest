@@ -98,14 +98,44 @@ function ($scope, $stateParams, httpService, MessageData,  sessionService) {
   $id = MessageData.getMessageData();
   $parentId = sessionService.get('id');
   $scope.showButton = true;
+  $scope.isActive = true;
   httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/polls/" + $id + "?parent=" + $parentId)
     .then(function(response){
       if(response.data.success){
         $scope.pollContent=response.data.content;
         $scope.showButton=!response.data.content.replied;
         if(response.data.content.replied) document.getElementById('optionsList').innerHTML = "La encuesta ya ha sido respondida.";
+        if(dateComparator(getTodaysDate(), dateToString($scope.pollContent.limitDate)) == 1) $scope.isActive = false;
       }
     })
+
+    function getTodaysDate() {
+    today = new Date()
+    day = today.getDate();
+    month = today.getMonth() + 1;
+    year = today.getFullYear();
+
+    return ((day < 10) ? "0" + day : day) +
+        "/" +
+        ((month < 10) ? "0" + month : month) +
+        "/" +
+        year;
+    }
+
+    function dateToString(date) {
+        return date.substring(8, 10) + "/" + date.substring(5, 7) + "/" + date.substring(0, 4);
+    }
+
+    function dateComparator(date1, date2) {
+        if (date1 === date2) return 0;
+        if (date1.substring(6, 10) > date2.substring(6, 10)) return 1;
+        if (date1.substring(6, 10) < date2.substring(6, 10)) return -1;
+        if (date1.substring(3, 5) > date2.substring(3, 5)) return 1;
+        if (date1.substring(3, 5) < date2.substring(3, 5)) return -1;
+        if (date1.substring(0, 2) > date2.substring(0, 2)) return 1;
+        else return -1;
+    }
+
     $scope.openInExternalBrowser = function(attachmentId){
     window.open('http://80.29.46.24:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
     };
@@ -142,15 +172,45 @@ function ($scope, $stateParams, $ionicPopup, httpService, MessageData , sessionS
   $parentId = sessionService.get('id');
   $studentId = sessionService.get('studentId');
   $id = MessageData.getMessageData();
+  $scope.isActive = true;
   httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + $parentId + "/authorizations/" + $id + "?student=" + $studentId)
     .then(function(response){
       if(response.data.success){
         $scope.authorizationContent=response.data.content;
+        if(dateComparator(getTodaysDate(), dateToString($scope.authorizationContent.limitDate)) == 1) $scope.isActive = false;
       }
     })
     $scope.openInExternalBrowser = function(attachmentId){
     window.open('http://80.29.46.24:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
     };
+
+
+    function getTodaysDate() {
+    today = new Date()
+    day = today.getDate();
+    month = today.getMonth() + 1;
+    year = today.getFullYear();
+
+    return ((day < 10) ? "0" + day : day) +
+        "/" +
+        ((month < 10) ? "0" + month : month) +
+        "/" +
+        year;
+    }
+
+    function dateToString(date) {
+        return date.substring(8, 10) + "/" + date.substring(5, 7) + "/" + date.substring(0, 4);
+    }
+
+    function dateComparator(date1, date2) {
+        if (date1 === date2) return 0;
+        if (date1.substring(6, 10) > date2.substring(6, 10)) return 1;
+        if (date1.substring(6, 10) < date2.substring(6, 10)) return -1;
+        if (date1.substring(3, 5) > date2.substring(3, 5)) return 1;
+        if (date1.substring(3, 5) < date2.substring(3, 5)) return -1;
+        if (date1.substring(0, 2) > date2.substring(0, 2)) return 1;
+        else return -1;
+    }
 
     $scope.showPopup = function(reply, replyId) {
       $scope.data = {};
@@ -253,7 +313,7 @@ function ($scope, $stateParams, $state, sessionService) {
 .controller('centreSelectorCtrl', ['$scope', '$stateParams',  '$state', 'httpService', 'sessionService',
 function ($scope, $stateParams, $state, httpService, sessionService) {
   $parentId = sessionService.get('id');
-  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/centres")
+  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/centres/" + $parentId)
   .then(function (response){
     if(response.data.success){
       $scope.centres = response.data.content;
@@ -265,7 +325,7 @@ function ($scope, $stateParams, $state, httpService, sessionService) {
       if(input.checked){
         $centreId = input.parentNode.parentNode.id;
         $centreId = $centreId.substring($centreId.lastIndexOf("-") + 1);
-        httpService.postCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/centres", {'parentId': $parentId, 'centreId' : $centreId})
+        httpService.postCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + $parentId + '/centres/' + $centreId, {})
         .then(function (response){
           if(response.data.success){
             $state.go('tabsController.circulars');
@@ -331,7 +391,7 @@ function ($scope, $stateParams, $state, $ionicPopup, httpService, sessionService
 .controller('myChildrenCtrl', ['$scope', '$stateParams', '$state', '$ionicPopup', 'httpService', 'sessionService',
 function ($scope, $stateParams, $state, $ionicPopup, httpService, sessionService) {
   $parentId = sessionService.get('id');
-  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/children')
+  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + sessionService.get('id') +'/students')
   .then(function (response){
     if(response.data.success){
       $scope.children = response.data.content;
@@ -364,4 +424,29 @@ function ($scope, $stateParams, $state, $ionicPopup, httpService, sessionService
 
 .controller('myCentreCtrl', ['$scope', '$stateParams',  '$state', 'httpService', 'sessionService',
 function ($scope, $stateParams, $state, httpService, sessionService) {
+  $parentId = sessionService.get('id');
+  httpService.getCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/centres/" + $parentId)
+  .then(function (response){
+    if(response.data.success){
+      $scope.centres = response.data.content;
+    }
+  });
+
+  $scope.addCentres = function(){
+    httpService.deleteCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + $parentId + "/centres", {})
+    .then(function (){
+      angular.forEach(document.getElementsByTagName('input'), function(input){
+        if(input.checked){
+          $centreId = input.parentNode.parentNode.id;
+          $centreId = $centreId.substring($centreId.lastIndexOf("-") + 1);
+          httpService.postCall("http://80.29.46.24:8000/Hermerest/web/app_dev.php/api/parents/" + $parentId + '/centres/' + $centreId, {})
+          .then(function (response){
+            if(response.data.success){
+
+            }
+          });
+        }
+      });
+    })
+  };
 }])
