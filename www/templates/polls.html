@@ -5,7 +5,7 @@
         <ion-item ng-repeat="poll in polls | orderBy : sortPolls : true" ng-click="sendPollId(poll.id)" class="item-icon-right positive" id="polls-list-item23" ui-sref="tabsController.pollContent()">{{poll.subject}}
           <span class="item-note" am-time-ago="poll.sendingDate"></span>
           <i ng-show="poll.attachment" class="icon ion-android-attach"></i>
-          <p am-time-ago="poll.limitDate"></p>
+          <p>{{poll.limitDate | amDateFormat:'LL'}}</p>
           <ion-option-button class="button-royal">Importante</ion-option-button>
         </ion-item>
       </ion-list>

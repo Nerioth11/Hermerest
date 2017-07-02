@@ -5,7 +5,7 @@
         <ion-item ng-repeat="authorization in authorizations  | orderBy : sortAuthorizations : true" ng-click="sendAuthorizationId(authorization.id, authorization.studentId)" class="item-icon-right positive" id="authorizations-list-item20" ui-sref="tabsController.authorizationContent()">{{authorization.subject}}
           <span class="item-note" am-time-ago="authorization.sendingDate"></span>
           <i ng-show="authorization.attachment" class="icon ion-android-attach"></i>
-          <p am-time-ago="authorization.limitDate"></p>
+          <p>{{authorization.limitDate | amDateFormat:'LL'}}</p>
           <ion-option-button class="button-royal">Importante</ion-option-button>
         </ion-item>
       </ion-list>
