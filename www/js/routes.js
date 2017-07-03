@@ -97,6 +97,12 @@ angular.module('app.routes', [])
     controller: 'signUpCtrl'
   })
 
+  .state('smsValidation', {
+    url: '/smsValidation',
+    templateUrl: 'templates/smsValidation.html',
+    controller: 'smsValidationCtrl'
+  })
+
   .state('passCode', {
     url: '/passcode',
     templateUrl: 'templates/passCode.html',

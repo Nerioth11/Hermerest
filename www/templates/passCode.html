@@ -1,17 +1,21 @@
 <ion-view title="Código de seguridad" id="page12">
   <ion-content padding="true" class="has-header" scroll="false">
     <div class="spacer" style="height: 100px;"></div>
-    <form ng-submit="sendPasscode(passCode)"id="signUp-form3" class="list">
-      <font size="3">¡Genial! Ya se ha registrado. Por favor, introduzca el código de seguridad que utilizará como método de seguridad.</font>
+    <form ng-submit="sendPasscode(passCode, passCodeRepeated)"id="signUp-form3" class="list">
+      <font size="3">Por favor, introduzca el código de seguridad que utilizará como método de seguridad.</font>
       <div class="spacer" style="height: 20px;"></div>
       <ion-list id="passCode-list12">
         <label class="item item-input" id="passCode-input3">
           <span class="input-label">Código de seguridad:</span>
-          <input type=tel style="-webkit-text-security:disc;" ng-model="passCode"></input>
+          <input type=tel style="-webkit-text-security:disc;" ng-model="passCode" required></input>
+        </label>
+        <label class="item item-input" id="passCode-input4">
+          <span class="input-label">Repita el código:</span>
+          <input type=tel style="-webkit-text-security:disc;" ng-model="passCodeRepeated" required></input>
         </label>
       </ion-list>
       <div class="spacer" style="height: 100px;"></div>
-      <input value="Finalizar" type="submit" id="login-button1" style="border-radius:1px 1px 1px 1px;" class="button button-positive button-block">
+      <input value="{{buttonName}}" type="submit" id="login-button1" style="border-radius:1px 1px 1px 1px;" class="button button-positive button-block">
     </form>
   </ion-content>
 </ion-view>

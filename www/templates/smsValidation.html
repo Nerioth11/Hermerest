@@ -1,0 +1,15 @@
+<ion-view title="Validación por SMS" id="page17">
+  <ion-content padding="true" class="has-header" scroll="false">
+    <h4 id="login-heading8" style="color:#000000;font-weight:400;">Por favor introduzca el código de verificación recibido vía SMS:</h4>
+    <form ng-submit="validate(smsCode)" id="smsValidation-form1" class="list">
+      <ion-list id="smsValidation-list1">
+        <label class="item item-input" id="smsValidation-input1">
+          <span class="input-label">Código:</span>
+          <input type=tel style="-webkit-text-security:disc;" ng-model="smsCode" required>
+        </label>
+      </ion-list>
+      <div class="spacer" style="height: 40px;"></div>
+      <input value="Verificar" type="submit" id="smsValidation-button1" style="border-radius:1px 1px 1px 1px;" class="button button-positive button-block">
+    </form>
+  </ion-content>
+</ion-view>

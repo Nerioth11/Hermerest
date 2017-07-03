@@ -12,11 +12,11 @@
         <i class="icon ion-android-attach" ng-show="authorizationContent.attachmentId!=null"></i>
         <a ng-click="openInExternalBrowser(authorizationContent.attachmentId)">{{authorizationContent.attachmentName}}</a>
       </ion-item>
-      <ion-item class="item-divider" id="authorizationContent-list-item-divider2">Hijo/a</ion-item>
+      <ion-item class="item-divider" id="authorizationContent-list-item-divider2">Hijo/a:</ion-item>
       <ion-item id="authorizationContent-list-item33">{{authorizationContent.studentName}}</ion-item>
-      <ion-item class="item-divider" id="authorizationContent-list-item-divider3"> Fecha límite <p style="color : red" ng-hide="isActive == true">EXCEDIDA</p></ion-item>
+      <ion-item class="item-divider" id="authorizationContent-list-item-divider3"> Fecha límite:<p style="color : red" ng-hide="isActive == true">EXCEDIDA</p></ion-item>
       <ion-item id="authorizationContent-list-item34">{{authorizationContent.limitDate | amDateFormat:'LLLL'}}</ion-item>
-      <ion-item class="item-divider" id="authorizationContent-list-item-divider4">Estado de la autorización</ion-item>
+      <ion-item class="item-divider" id="authorizationContent-list-item-divider4">Estado de la autorización:</ion-item>
       <ion-item id="authorizationContent-list-item35">{{authorizationContent.authorized? 'Autorizado' : 'No autorizado'}}</ion-item>
     </ion-list>
     <div id="authorizationContent-button-bar1" class="button-bar"></div>

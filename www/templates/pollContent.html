@@ -1,24 +1,23 @@
 <ion-view title="{{pollContent.subject}}" id="page10">
   <ion-content padding="true" class="has-header">
-    <div id="pollContent-container6">
+    <div id="pollContent-container6" ng-if="dataArrived">
       <h4 id="pollContent-heading6" style="color:#000000;font-weight:300;text-align:justify;">{{pollContent.subject}}</h4>
       <h5 id="pollContent-heading7" style="color:#000000;font-weight:300;">{{pollContent.sendingDate | amDateFormat:'LLLL'}}</h5>
       <div id="pollContent-markdown14" style="text-align:justify;" class="show-list-numbers-and-dots">
         <p style="color:#000000;">{{pollContent.message}}</p>
       </div>
+      <form id="pollContent-form2" class="list">
+        <ion-item class="item-icon-left" id="authorizationContent-list-item22" ng-show="pollContent.attachmentId!=null">
+          <i class="icon ion-android-attach" ng-show="pollContent.attachmentId!=null"></i>
+          <a ng-click="openInExternalBrowser(pollContent.attachmentId)">{{pollContent.attachmentName}}</a>
+        </ion-item>
+        <ion-item class="item-divider" id="authorizationContent-list-item-divider2" ng-if="isActive == true || pollReplied == true"> {{pollContent.multiple ? "Escoja una o varias respuestas:" : "Escoja una respuesta:"}}</ion-item>
+        <ion-item id="pollContent-list-item32" ng-if="pollReplied == true">La encuesta ya ha sido respondida.</ion-item>
+        <ion-checkbox id="pollContent-checkbox-{{ option.id }}" ng-repeat="option in pollContent.options" ng-click="checkMultipleAndDo(pollContent.multiple, {{ option.id }})" ng-if="pollReplied == false && isActive == true">{{option.name}}</ion-checkbox>
+        <ion-item class="item-divider" id="pollContent-list-item-divider1">Fecha límite:<p style="color : red" ng-hide="isActive == true">EXCEDIDA</p></ion-item>
+        <ion-item id="pollContent-list-item33">{{pollContent.limitDate | amDateFormat:'LLLL'}}</ion-item>
+      </form>
+      <button id="pollContent-button23" class="button button-positive button-block" ng-click="sendPollReplies()" ng-if="pollReplied == false && isActive == true">Enviar respuesta</button>
     </div>
-    <form id="pollContent-form2" class="list">
-      <ion-item class="item-icon-left" id="authorizationContent-list-item22" ng-show="pollContent.attachmentId!=null">
-        <i class="icon ion-android-attach" ng-show="pollContent.attachmentId!=null"></i>
-        <a ng-click="openInExternalBrowser(pollContent.attachmentId)">{{pollContent.attachmentName}}</a>
-      </ion-item>
-      <ion-item class="item-divider" id="authorizationContent-list-item-divider2">Por favor, escoja una respuesta: </ion-item>
-      <ion-item id="optionsList">
-        <ion-checkbox id="pollContent-checkbox-{{ option.id }}" ng-repeat="option in pollContent.options" ng-click="checkMultipleAndDo(pollContent.multiple, {{ option.id }})">{{option.name}}</ion-checkbox>
-      </ion-item>
-      <ion-item class="item-divider" id="pollContent-list-item-divider1">Fecha Límite <p style="color : red" ng-hide="isActive == true">EXCEDIDA</p></ion-item>
-      <ion-item id="pollContent-list-item32">{{pollContent.limitDate | amDateFormat:'LLLL'}}</ion-item>
-    </form>
-    <button id="pollContent-button23" class="button button-positive button-block" ng-click="sendPollReplies()" ng-hide="showButton == false">Enviar respuesta</button>
   </ion-content>
 </ion-view>
