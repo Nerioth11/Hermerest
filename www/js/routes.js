@@ -81,12 +81,12 @@ angular.module('app.routes', [])
     controller: 'loginCtrl'
   })
 
-  .state('tabsController.settings', {
-    url: '/settings',
+  .state('tabsController.myProfile', {
+    url: '/myProfile',
     views: {
       'tab4': {
-        templateUrl: 'templates/settings.html',
-        controller: 'settingsCtrl'
+        templateUrl: 'templates/myProfile.html',
+        controller: 'myProfileCtrl'
       }
     }
   })

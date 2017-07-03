@@ -18,11 +18,6 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
     MessageData.setMessageData(id);
   };
 
-  $scope.sortCirculars = function(circular) {
-    var date = new Date(circular.sendingDate);
-    return date;
-  };
-
   $scope.showFilterBar = function () {
      filterBarInstance = $ionicFilterBar.show({
        items: $scope.circulars,
@@ -49,11 +44,6 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
     MessageData.setMessageData(id);
   };
 
-  $scope.sortPolls = function(poll) {
-    var date = new Date(poll.sendingDate);
-    return date;
-  };
-
 }])
 
 .controller('authorizationsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData',
@@ -70,11 +60,6 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
   $scope.sendAuthorizationId = function(id, studentId){
     MessageData.setMessageData(id);
     sessionService.set('studentId', studentId);
-  };
-
-  $scope.sortAuthorizations = function(authorization) {
-    var date = new Date(authorization.sendingDate);
-    return date;
   };
 
 }])
@@ -281,7 +266,7 @@ function ($scope, $stateParams, $ionicPopup, httpService, MessageData , sessionS
  }])
 
 
-.controller('settingsCtrl', ['$scope', '$stateParams', '$state', 'sessionService',
+.controller('myProfileCtrl', ['$scope', '$stateParams', '$state', 'sessionService',
 function ($scope, $stateParams, $state, sessionService) {
 }])
 

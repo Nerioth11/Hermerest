@@ -2,7 +2,7 @@
   <ion-content padding="false" class="has-header">
     <div id="polls-container5">
       <ion-list id="polls-list11">
-        <ion-item ng-repeat="poll in polls | orderBy : sortPolls : true" ng-click="sendPollId(poll.id)" class="item-icon-right positive" id="polls-list-item23" ui-sref="tabsController.pollContent()">{{poll.subject}}
+        <ion-item ng-repeat="poll in polls | orderBy : poll.sendingDate" ng-click="sendPollId(poll.id)" class="item-icon-right positive" id="polls-list-item23" ui-sref="tabsController.pollContent()">{{poll.subject}}
           <span class="item-note" am-time-ago="poll.sendingDate"></span>
           <i ng-show="poll.attachment" class="icon ion-android-attach"></i>
           <p>{{poll.limitDate | amDateFormat:'LL'}}</p>
