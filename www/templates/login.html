@@ -1,14 +1,16 @@
 <ion-view title="Inicio de sesión" id="page5">
   <ion-content padding="true" class="has-header" scroll="false">
     <h4 id="login-heading8" style="color:#000000;font-weight:400;">Por favor introduzca su teléfono:</h4>
-    <form ng-submit="send(phoneNumber)" id="login-form1" class="list">
+    <form name="loginForm" ng-submit="send(phoneNumber, loginForm)" id="login-form1" class="list">
       <ion-list id="login-list1">
         <label class="item item-input" id="login-input1">
           <span class="input-label">Teléfono:</span>
-          <input type="tel" name="phoneNumber" required ng-model="phoneNumber">
+          <input type="tel" name="phoneNumber" required ng-model="phoneNumber" ng-minlength="9" ng-maxlength="9">
         </label>
       </ion-list>
-      <div class="spacer" style="height: 40px;"></div>
+      <div class="spacer" style="height: 10px;"></div>
+      <p class="assertive" ng-show="loginForm.phoneNumber.$error.minlength">El teléfono debe tener 9 dígitos.</p>
+      <p class="assertive" ng-show="loginForm.phoneNumber.$error.maxlength">El teléfono debe tener 9 dígitos.</p>
       <input value="Acceder" type="submit" id="login-button1" style="border-radius:1px 1px 1px 1px;" class="button button-positive button-block">
     </form>
   </ion-content>

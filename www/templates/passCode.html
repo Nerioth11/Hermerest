@@ -1,20 +1,22 @@
 <ion-view title="Código de seguridad" id="page12">
   <ion-content padding="true" class="has-header" scroll="false">
     <div class="spacer" style="height: 100px;"></div>
-    <form ng-submit="sendPasscode(passCode, passCodeRepeated)"id="signUp-form3" class="list">
-      <font size="3">Por favor, introduzca el código de seguridad que utilizará como método de seguridad.</font>
+    <form name="passCodeForm" ng-submit="sendPasscode(passCode, passCodeRepeated, passCodeForm)"id="signUp-form3" class="list">
+      <font size="3">Por favor, introduzca el código de seguridad de 4 dígitos que utilizará como método de seguridad.</font>
       <div class="spacer" style="height: 20px;"></div>
       <ion-list id="passCode-list12">
         <label class="item item-input" id="passCode-input3">
           <span class="input-label">Código de seguridad:</span>
-          <input type=tel style="-webkit-text-security:disc;" ng-model="passCode" required></input>
+          <input name="passCode" type=tel style="-webkit-text-security:disc;" ng-model="passCode" ng-minlength="4" ng-maxlength="4" required></input>
         </label>
         <label class="item item-input" id="passCode-input4">
           <span class="input-label">Repita el código:</span>
-          <input type=tel style="-webkit-text-security:disc;" ng-model="passCodeRepeated" required></input>
+          <input name="passCodeRepeated" type=tel style="-webkit-text-security:disc;" ng-model="passCodeRepeated" ng-minlength="4" ng-maxlength="4" required></input>
         </label>
       </ion-list>
-      <div class="spacer" style="height: 100px;"></div>
+      <div class="spacer" style="height: 10px;"></div>
+      <p class="assertive" ng-show="passCodeForm.passCode.$error.minlength">El código de seguridad debe tener 4 dígitos.</p>
+      <p class="assertive" ng-show="passCodeForm.passCode.$error.maxlength">El código de seguridad debe tener 4 dígitos.</p>
       <input value="{{buttonName}}" type="submit" id="login-button1" style="border-radius:1px 1px 1px 1px;" class="button button-positive button-block">
     </form>
   </ion-content>

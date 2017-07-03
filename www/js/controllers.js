@@ -270,7 +270,8 @@ function ($scope, $stateParams, $ionicPopup, httpService, MessageData , sessionS
 
 .controller('loginCtrl', ['$scope', '$stateParams', 'httpService', 'sessionService', '$state',
     function ($scope, $stateParams, httpService, sessionService, $state) {
-      $scope.send= function(phoneNumber){
+      $scope.send= function(phoneNumber, form){
+        if(form.$invalid) return;
         sessionService.set('telephone', phoneNumber);
         httpService.getCall("parents?telephone=" + phoneNumber)
          .then(function (response) {
@@ -321,8 +322,9 @@ function ($scope, $stateParams,  $state, httpService, sessionService) {
 .controller('passCodeCtrl', ['$scope', '$stateParams',  '$state', '$ionicPopup', 'sessionService',
 function ($scope, $stateParams, $state, $ionicPopup, sessionService) {
   sessionService.get('isRegistered') ? $scope.buttonName = 'Finalizar' : $scope.buttonName = 'Siguiente';
-  $scope.sendPasscode = function(passCode, passCodeRepeated) {
+  $scope.sendPasscode = function(passCode, passCodeRepeated, form) {
     if(passCode == passCodeRepeated){
+      if(form.$invalid) return;
       sessionService.set('passCode', passCode);
       if(sessionService.get('isRegistered')){
         $state.go('tabsController.circulars')
