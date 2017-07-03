@@ -1,29 +1,29 @@
 <ion-view title="{{authorizationContent.subject}}" id="page8">
   <ion-content padding="true" class="has-header">
-    <div id="authorizationContent-container4">
+    <div id="authorizationContent-container4" ng-if="dataArrived">
       <h4 id="authorizationContent-heading4" style="color:#000000;font-weight:300;text-align:justify;">{{authorizationContent.subject}}</h4>
       <h5 id="authorizationContent-heading5" style="color:#000000;font-weight:300;">{{authorizationContent.sendingDate | amDateFormat:'LLLL'}}</h5>
       <div id="authorizationContent-markdown13" style="text-align:justify;" class="show-list-numbers-and-dots">
         <p style="color:#000000;">{{authorizationContent.message}}</p>
       </div>
-    </div>
-    <ion-list id="authorizationContent-list10">
-      <ion-item class="item-icon-left" id="authorizationContent-list-item22" ng-show="authorizationContent.attachmentId!=null">
-        <i class="icon ion-android-attach" ng-show="authorizationContent.attachmentId!=null"></i>
-        <a ng-click="openInExternalBrowser(authorizationContent.attachmentId)">{{authorizationContent.attachmentName}}</a>
-      </ion-item>
-      <ion-item class="item-divider" id="authorizationContent-list-item-divider2">Hijo/a:</ion-item>
-      <ion-item id="authorizationContent-list-item33">{{authorizationContent.studentName}}</ion-item>
-      <ion-item class="item-divider" id="authorizationContent-list-item-divider3"> Fecha límite:<p style="color : red" ng-hide="isActive == true">EXCEDIDA</p></ion-item>
-      <ion-item id="authorizationContent-list-item34">{{authorizationContent.limitDate | amDateFormat:'LLLL'}}</ion-item>
-      <ion-item class="item-divider" id="authorizationContent-list-item-divider4">Estado de la autorización:</ion-item>
-      <ion-item id="authorizationContent-list-item35">{{authorizationContent.authorized? 'Autorizado' : 'No autorizado'}}</ion-item>
-    </ion-list>
-    <div id="authorizationContent-button-bar1" class="button-bar"></div>
-    <div id="authorizationContent-button-bar2" class="button-bar"></div>
-    <div id="authorizationContent-button-bar3" class="button-bar">
-      <button id="authorizationContent-button20" class="button button-balanced button-block" ng-click="showPopup(true, authorizationContent.replyId)" ng-hide="authorizationContent.reply == true || isActive == false">Autorizar</button>
-      <button id="authorizationContent-button22" class="button button-assertive button-block" ng-click="showPopup(false, authorizationContent.replyId)" ng-hide="authorizationContent.reply == false || isActive == false">No autorizar</button>
+      <ion-list id="authorizationContent-list10">
+        <ion-item class="item-icon-left" id="authorizationContent-list-item22" ng-show="authorizationContent.attachmentId!=null">
+          <i class="icon ion-android-attach" ng-show="authorizationContent.attachmentId!=null"></i>
+          <a ng-click="openInExternalBrowser(authorizationContent.attachmentId)">{{authorizationContent.attachmentName}}</a>
+        </ion-item>
+        <ion-item class="item-divider" id="authorizationContent-list-item-divider2">Hijo/a:</ion-item>
+        <ion-item id="authorizationContent-list-item33">{{authorizationContent.studentName}}</ion-item>
+        <ion-item class="item-divider" id="authorizationContent-list-item-divider3"> Fecha límite:<p style="color : red" ng-hide="isActive == true">EXCEDIDA</p></ion-item>
+        <ion-item id="authorizationContent-list-item34">{{authorizationContent.limitDate | amDateFormat:'LLLL'}}</ion-item>
+        <ion-item class="item-divider" id="authorizationContent-list-item-divider4">Estado de la autorización:</ion-item>
+        <ion-item id="authorizationContent-list-item35">{{authorizationContent.authorized? 'Autorizado' : 'No autorizado'}}</ion-item>
+      </ion-list>
+      <div id="authorizationContent-button-bar1" class="button-bar"></div>
+      <div id="authorizationContent-button-bar2" class="button-bar"></div>
+      <div id="authorizationContent-button-bar3" class="button-bar">
+        <button id="authorizationContent-button20" class="button button-balanced button-block" ng-click="showPopup(true, authorizationContent.replyId)" ng-hide="authorizationContent.reply == true || isActive == false">Autorizar</button>
+        <button id="authorizationContent-button22" class="button button-assertive button-block" ng-click="showPopup(false, authorizationContent.replyId)" ng-hide="authorizationContent.reply == false || isActive == false">No autorizar</button>
+      </div>
     </div>
   </ion-content>
 </ion-view>

@@ -1,11 +1,13 @@
 <ion-view title="Mis hijos" id="page15">
   <ion-content padding="true" class="has-header">
-    <list id="myChildren-list1" class="list">
-      <ion-item class="item-divider" id="centro-list-item-divider4"> Hijos/as:</ion-item>
-      <ion-item class="item-icon-right" id="list-item-{{ child.id }}" ng-repeat="child in children">
-        {{child.name}} {{child.surname}}
-        <i class="icon ion-ios-close assertive" ng-click="deleteChild(item, child.id)"></i>
-      </ion-item>
-    </list>
+    <div id="myChildren-container1" ng-if="dataArrived">
+      <ion-list id="myChildren-list1" class="list">
+        <ion-item class="item-divider" id="centro-list-item-divider4"> Hijos/as:</ion-item>
+        <ion-item class="item-icon-right" id="list-item-{{ child.id }}" ng-repeat="child in children">
+          {{child.name}} {{child.surname}}
+          <i class="icon ion-ios-close assertive" ng-click="deleteChild(item, child.id)"></i>
+        </ion-item>
+      </ion-list>
+    </div>
   </ion-content>
 </ion-view>

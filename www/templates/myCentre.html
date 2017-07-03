@@ -1,10 +1,12 @@
 <ion-view title="Mis centros" id="page16">
   <ion-content padding="true" class="has-header">
-    <form id="myCentre-form5" class="list">
-      <ion-item class="item-divider" id="myCentre-list-item-divider4"> Por favor seleccione sus centros:</ion-item>
-      <ion-checkbox id="myCentre-checkbox-{{ centre.id }}" ng-repeat="centre in centres" ng-checked="centre.isSet">{{centre.name}}</ion-checkbox>
-      <div class="spacer" style="height: 40px;"></div>
-      <button id="centro-button26" class="button button-positive button-block" ng-click="addCentres()">Actualizar centros</button>
-    </form>
+    <div id="circularContent-container1" ng-if="dataArrived">
+      <form id="myCentre-form5" class="list">
+        <ion-item class="item-divider" id="myCentre-list-item-divider4"> Por favor seleccione sus centros:</ion-item>
+        <ion-checkbox id="myCentre-checkbox-{{ centre.id }}" ng-repeat="centre in centres" ng-checked="centre.isSet">{{centre.name}}</ion-checkbox>
+        <div class="spacer" style="height: 40px;"></div>
+        <button id="centro-button26" class="button button-positive button-block" ng-click="addCentres()">Actualizar centros</button>
+      </form>
+    </div>
   </ion-content>
 </ion-view>

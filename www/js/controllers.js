@@ -183,6 +183,7 @@ function ($scope, $stateParams, $ionicPopup, httpService, MessageData , sessionS
       if(response.data.success){
         $scope.authorizationContent=response.data.content;
         if(dateComparator(getTodaysDate(), dateToString($scope.authorizationContent.limitDate)) == 1) $scope.isActive = false;
+        $scope.dataArrived = true;
       }
     })
     $scope.openInExternalBrowser = function(attachmentId){
@@ -433,6 +434,7 @@ function ($scope, $stateParams, $state, $ionicPopup, httpService, sessionService
   .then(function (response){
     if(response.data.success){
       $scope.children = response.data.content;
+      $scope.dataArrived = true;
     }
   });
   $scope.deleteChild = function(item, childId){
@@ -467,6 +469,7 @@ function ($scope, $stateParams, $state, httpService, sessionService) {
   .then(function (response){
     if(response.data.success){
       $scope.centres = response.data.content;
+      $scope.dataArrived = true;
     }
   });
 
