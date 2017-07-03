@@ -93,7 +93,7 @@ function ($scope, $stateParams, httpService, MessageData, $ionicPopup) {
     })
 
     $scope.openInExternalBrowser = function(attachmentId){
-    window.open('http://80.29.46.24:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
+    window.open('http://' + httpService.getIp() + ':8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
     };
 }])
 
@@ -142,7 +142,7 @@ function ($scope, $stateParams, httpService, MessageData,  sessionService) {
     }
 
     $scope.openInExternalBrowser = function(attachmentId){
-    window.open('http://80.29.46.24:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
+    window.open('http://' + httpService.getIp() + ':8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
     };
 
     $scope.checkMultipleAndDo = function(multiple, checkId) {
@@ -187,7 +187,7 @@ function ($scope, $stateParams, $ionicPopup, httpService, MessageData , sessionS
       }
     })
     $scope.openInExternalBrowser = function(attachmentId){
-    window.open('http://80.29.46.24:8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
+    window.open('http://' + httpService.getIp() + ':8000/Hermerest_attachments/'+ attachmentId,'_system','location=yes');
     };
 
 
