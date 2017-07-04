@@ -167,7 +167,7 @@ function ($scope, $stateParams, httpService, MessageData,  sessionService) {
       angular.forEach(document.getElementsByTagName('input'), function(input){
         input.disabled=true;
       });
-      $scope.showButton = false;
+      $scope.pollReplied = true;
     };
 
 }])
