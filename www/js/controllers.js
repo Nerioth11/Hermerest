@@ -1,8 +1,9 @@
 angular.module('app.controllers', [])
 
-.controller('circularsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar',
-function ($scope, $stateParams, httpService, httpService, sessionService, MessageData, $ionicFilterBar) {
+.controller('circularsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar', '$ionicHistory',
+function ($scope, $stateParams, httpService, httpService, sessionService, MessageData, $ionicFilterBar, $ionicHistory) {
   $scope.$on("$ionicView.beforeEnter", function(){
+    $ionicHistory.clearHistory();
     $scope.circulars = [];
     var filterBarInstance;
     $scope.prueba = new Date();
@@ -31,9 +32,10 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
 
 }])
 
-.controller('pollsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar',
-function ($scope, $stateParams, httpService, httpService, sessionService, MessageData, $ionicFilterBar) {
+.controller('pollsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar', '$ionicHistory',
+function ($scope, $stateParams, httpService, httpService, sessionService, MessageData, $ionicFilterBar, $ionicHistory) {
   $scope.$on("$ionicView.beforeEnter", function(){
+    $ionicHistory.clearHistory();
     $scope.polls = [];
     httpService.getCall("parents/" + sessionService.get('id') +'/messages?type=Poll')
       .then(function(response){
@@ -60,9 +62,10 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
 
 }])
 
-.controller('authorizationsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar',
-function ($scope, $stateParams, httpService, httpService, sessionService, MessageData, $ionicFilterBar) {
+.controller('authorizationsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar', '$ionicHistory',
+function ($scope, $stateParams, httpService, httpService, sessionService, MessageData, $ionicFilterBar, $ionicHistory) {
   $scope.$on("$ionicView.beforeEnter", function(){
+    $ionicHistory.clearHistory();
     $scope.authorizations = [];
     httpService.getCall("parents/" + sessionService.get('id') +'/messages?type=Authorization')
       .then(function(response){
