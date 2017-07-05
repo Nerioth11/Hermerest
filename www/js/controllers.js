@@ -374,8 +374,11 @@ function ($scope, $stateParams, $state, httpService, sessionService) {
   };
 }])
 
-.controller('myProfileCtrl', ['$scope', '$stateParams', '$state', '$ionicPopup', 'sessionService',
-function ($scope, $stateParams, $state, $ionicPopup, sessionService) {
+.controller('myProfileCtrl', ['$scope', '$stateParams', '$state', '$ionicPopup', 'sessionService', '$ionicHistory',
+function ($scope, $stateParams, $state, $ionicPopup, sessionService, $ionicHistory) {
+  $scope.$on("$ionicView.beforeEnter", function(){
+    $ionicHistory.clearHistory();
+  });
 }])
 
 .controller('myDataCtrl', ['$scope', '$stateParams',  '$state', '$ionicPopup', 'httpService', 'sessionService',
