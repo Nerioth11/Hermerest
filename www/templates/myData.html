@@ -12,19 +12,21 @@
           {{parentData.telephone}}
         </ion-item>
         <ion-item class="item-divider" id="myDataContent-list-item-divider1">Código de seguridad</ion-item>
-        <form ng-submit="sendNewPasscode(actualCode, newCode, newCodeRepeated)"id="myData-form3" class="list">
+        <form name="editPassCodeForm" id="myData-form3" class="list" ng-submit="sendNewPasscode(actualCode, newCode, newCodeRepeated)">
           <label class="item item-input" id="myData-input2">
             <span class="input-label">Código actual:</span>
-            <input type="tel" style="-webkit-text-security:disc;" required ng-model="actualCode">
+            <input name="currentCode-input" type="tel" style="-webkit-text-security:disc;" required ng-model="actualCode">
           </label>
           <label class="item item-input" id="myData-input3">
             <span class="input-label">Nuevo código:</span>
-            <input type="tel" style="-webkit-text-security:disc;" required ng-model="newCode">
+            <input name="newCode" type="tel" style="-webkit-text-security:disc;" required ng-model="newCode" ng-minlength="4" ng-maxlength="4">
           </label>
           <label class="item item-input" id="myData-input4">
             <span class="input-label">Por favor, repita el código:</span>
-            <input type="tel" style="-webkit-text-security:disc;" required ng-model="newCodeRepeated">
+            <input name="currentCodeRepeated-input" type="tel" style="-webkit-text-security:disc;" required ng-model="newCodeRepeated">
           </label>
+          <p class="assertive" ng-show="editPassCodeForm.newCode.$error.minlength">El código de seguridad debe tener 4 dígitos.</p>
+          <p class="assertive" ng-show="editPassCodeForm.newCode.$error.maxlength">El código de seguridad debe tener 4 dígitos.</p>
           <input value="Actualizar código de seguridad" name="updateButton" type="submit" id="myData-button1" style="border-radius:1px 1px 1px 1px;" class="button button-positive button-block">
         </form>
       </ion-list>

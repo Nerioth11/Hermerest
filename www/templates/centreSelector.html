@@ -1,6 +1,6 @@
 <ion-view title="Centro" id="page13">
   <ion-content padding="true" class="has-header">
-    <form id="centro-form5" class="list">
+    <form id="centerSelector-form5" class="list" ng-if="dataArrived">
       <ion-item class="item-divider" id="centro-list-item-divider4"> Por favor seleccione sus centros:</ion-item>
       <ion-checkbox id="centreSelector-checkbox-{{ centre.id }}" ng-repeat="centre in centres">{{centre.name}}</ion-checkbox>
       <div class="spacer" style="height: 40px;"></div>

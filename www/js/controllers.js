@@ -2,17 +2,20 @@ angular.module('app.controllers', [])
 
 .controller('circularsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar',
 function ($scope, $stateParams, httpService, httpService, sessionService, MessageData, $ionicFilterBar) {
-  $scope.circulars = [];
-  var filterBarInstance;
-  $scope.prueba = new Date();
-  httpService.getCall("parents/" + sessionService.get('id') +'/messages?type=Circular')
-    .then(function(response){
-      if(response.data.success){
-        angular.forEach(response.data.content, function(message){
-          $scope.circulars.push(message);
-        });
-      }
-    })
+  $scope.$on("$ionicView.beforeEnter", function(){
+    $scope.circulars = [];
+    var filterBarInstance;
+    $scope.prueba = new Date();
+    httpService.getCall("parents/" + sessionService.get('id') +'/messages?type=Circular')
+      .then(function(response){
+        if(response.data.success){
+          angular.forEach(response.data.content, function(message){
+            $scope.circulars.push(message);
+          });
+        }
+      })
+  });
+
   $scope.sendCircularId = function(id){
     MessageData.setMessageData(id);
   };
@@ -30,15 +33,18 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
 
 .controller('pollsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar',
 function ($scope, $stateParams, httpService, httpService, sessionService, MessageData, $ionicFilterBar) {
-  $scope.polls = [];
-  httpService.getCall("parents/" + sessionService.get('id') +'/messages?type=Poll')
-    .then(function(response){
-      if(response.data.success){
-        angular.forEach(response.data.content, function(message){
-          $scope.polls.push(message);
-        });
-      }
-    })
+  $scope.$on("$ionicView.beforeEnter", function(){
+    $scope.polls = [];
+    httpService.getCall("parents/" + sessionService.get('id') +'/messages?type=Poll')
+      .then(function(response){
+        if(response.data.success){
+          angular.forEach(response.data.content, function(message){
+            $scope.polls.push(message);
+          });
+        }
+      })
+  });
+
   $scope.sendPollId = function(id){
     MessageData.setMessageData(id);
   };
@@ -56,15 +62,18 @@ function ($scope, $stateParams, httpService, httpService, sessionService, Messag
 
 .controller('authorizationsCtrl', ['$scope', '$stateParams', '$http', 'httpService', 'sessionService', 'MessageData', '$ionicFilterBar',
 function ($scope, $stateParams, httpService, httpService, sessionService, MessageData, $ionicFilterBar) {
-  $scope.authorizations = [];
-  httpService.getCall("parents/" + sessionService.get('id') +'/messages?type=Authorization')
-    .then(function(response){
-      if(response.data.success){
-        angular.forEach(response.data.content, function(message){
-          $scope.authorizations.push(message);
-        });
-      }
-    })
+  $scope.$on("$ionicView.beforeEnter", function(){
+    $scope.authorizations = [];
+    httpService.getCall("parents/" + sessionService.get('id') +'/messages?type=Authorization')
+      .then(function(response){
+        if(response.data.success){
+          angular.forEach(response.data.content, function(message){
+            $scope.authorizations.push(message);
+          });
+        }
+      })
+  });
+
   $scope.sendAuthorizationId = function(id, studentId){
     MessageData.setMessageData(id);
     sessionService.set('studentId', studentId);
@@ -147,7 +156,7 @@ function ($scope, $stateParams, httpService, MessageData,  sessionService) {
 
     $scope.checkMultipleAndDo = function(multiple, checkId) {
       if(!multiple){
-        angular.forEach(document.getElementsByTagName('input'), function(input){
+        angular.forEach(document.getElementById('pollContent-form2').getElementsByTagName('input'), function(input){
           input.checked=false;
         });
         $checkBox = document.getElementById("pollContent-checkbox-" + checkId).getElementsByTagName('input')[0];
@@ -157,14 +166,14 @@ function ($scope, $stateParams, httpService, MessageData,  sessionService) {
     };
 
     $scope.sendPollReplies = function(){
-      angular.forEach(document.getElementsByTagName('input'), function(input){
+      angular.forEach(document.getElementById('pollContent-form2').getElementsByTagName('input'), function(input){
         if(input.checked){
           $pollOptionId = input.parentNode.parentNode.id;
   		    $pollOptionId = $pollOptionId.substring($pollOptionId.lastIndexOf("-") + 1);
           httpService.postCall("pollreplies", {'parentId': $parentId, 'pollOptionId' : $pollOptionId});
         }
       });
-      angular.forEach(document.getElementsByTagName('input'), function(input){
+      angular.forEach(document.getElementById('pollContent-form2').getElementsByTagName('input'), function(input){
         input.disabled=true;
       });
       $scope.pollReplied = true;
@@ -270,6 +279,7 @@ function ($scope, $stateParams, $ionicPopup, httpService, MessageData , sessionS
 
 .controller('loginCtrl', ['$scope', '$stateParams', 'httpService', 'sessionService', '$state',
     function ($scope, $stateParams, httpService, sessionService, $state) {
+      localStorage.clear();
       $scope.send= function(phoneNumber, form){
         if(form.$invalid) return;
         sessionService.set('telephone', phoneNumber);
@@ -347,22 +357,17 @@ function ($scope, $stateParams, $state, httpService, sessionService) {
   .then(function (response){
     if(response.data.success){
       $scope.centres = response.data.content;
+      $scope.dataArrived = true;
     }
   });
 
   $scope.addCentres = function(){
-    angular.forEach(document.getElementsByTagName('input'), function(input){
-      if(input.checked){
+    angular.forEach(document.getElementById('centerSelector-form5').querySelectorAll('input[type=checkbox]:checked'), function(input){
         $centreId = input.parentNode.parentNode.id;
         $centreId = $centreId.substring($centreId.lastIndexOf("-") + 1);
-        httpService.postCall("parents/" + $parentId + '/centres/' + $centreId, {})
-        .then(function (response){
-          if(response.data.success){
-            $state.go('tabsController.circulars');
-          }
-        });
-      }
+        httpService.postCall("parents/" + $parentId + '/centres/' + $centreId, {});
     });
+    $state.go('tabsController.circulars');
   };
 }])
 
@@ -391,7 +396,7 @@ function ($scope, $stateParams, $state, $ionicPopup, httpService, sessionService
     }else{
       sessionService.destroy('passCode');
       sessionService.set('passCode', newCode);
-      angular.forEach(document.getElementsByTagName('input'), function(input){
+      angular.forEach(document.getElementById('myData-form3').querySelectorAll('input'), function(input){
         if(input.name != "updateButton") input.value = "";
       });
     }
@@ -464,25 +469,25 @@ function ($scope, $stateParams, $state, $ionicPopup, httpService, sessionService
 }])
 
 .controller('myCentreCtrl', ['$scope', '$stateParams',  '$state', 'httpService', 'sessionService',
-function ($scope, $stateParams, $state, httpService, sessionService) {
-  $parentId = sessionService.get('id');
-  httpService.getCall("centres/" + $parentId)
-  .then(function (response){
-    if(response.data.success){
-      $scope.centres = response.data.content;
-      $scope.dataArrived = true;
-    }
-  });
+  function ($scope, $stateParams, $state, httpService, sessionService) {
+    $scope.$on("$ionicView.beforeEnter", function(){
+    $parentId = sessionService.get('id');
+    httpService.getCall("centres/" + $parentId)
+      .then(function (response){
+        if(response.data.success){
+          $scope.centres = response.data.content;
+          $scope.dataArrived = true;
+        }
+      });
+    });
 
   $scope.addCentres = function(){
     httpService.deleteCall("parents/" + $parentId + "/centres", {})
     .then(function (){
-      angular.forEach(document.getElementsByTagName('input'), function(input){
-        if(input.checked){
+      angular.forEach(document.getElementById('myCentre-form5').querySelectorAll('input[type=checkbox]:checked'), function(input){
           $centreId = input.parentNode.parentNode.id;
           $centreId = $centreId.substring($centreId.lastIndexOf("-") + 1);
           httpService.postCall("parents/" + $parentId + '/centres/' + $centreId, {});
-        }
       });
     });
   };
