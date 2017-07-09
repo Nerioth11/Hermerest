@@ -451,7 +451,7 @@ function ($scope, $stateParams, $state, $ionicPopup, httpService, sessionService
   });
   $scope.deleteChild = function(item, childId){
     var myPopup = $ionicPopup.show({
-      template: '¿Está seguro de que desea disociarse de este/a hijo/a?',
+      template: '¿Está seguro de que desea desasociarse de este/a hijo/a?',
       title: 'Confirmación',
       subTitle: 'IMPORTANTE: Esta acción no será reversible',
       scope: $scope,
