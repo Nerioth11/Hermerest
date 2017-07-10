@@ -282,7 +282,6 @@ function ($scope, $stateParams, $ionicPopup, httpService, MessageData , sessionS
 
 .controller('loginCtrl', ['$scope', '$stateParams', 'httpService', 'sessionService', '$state',
     function ($scope, $stateParams, httpService, sessionService, $state) {
-      localStorage.clear();
       $scope.send= function(phoneNumber, form){
         if(form.$invalid) return;
         sessionService.set('telephone', phoneNumber);
